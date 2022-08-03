@@ -39,6 +39,13 @@ dependencies:
   timezone: ^0.8.0
   rxdart: ^0.27.5
   flutter_local_notifications: ^9.7.0
+  hive_flutter: ^1.1.0
+  intl: ^0.17.0
+  animated_text_kit: ^4.2.2
+  lottie: ^1.4.1
+  flutter_slidable: ^2.0.0
+  syncfusion_flutter_charts: ^20.2.40
+  month_year_picker: ^0.2.0+1
 
 dev_dependencies:
   flutter_test:

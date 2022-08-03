@@ -135,12 +135,12 @@ class ScreenSettings extends StatelessWidget {
             TextButton(
               child: const Text('Confirm'),
               onPressed: () async {
-                TransactionDb().clearData();
-                CategoryDB().clearCategory();
-                TransactionDb().refresh();
-                final preferences = await SharedPreferences.getInstance();
-                preferences.clear();
-                Navigator.of(context).pop();
+                // TransactionDb().clearData();
+                // CategoryDB().clearCategory();
+                // TransactionDb().refresh();
+                // final preferences = await SharedPreferences.getInstance();
+                // preferences.clear();
+                // Navigator.of(context).pop();
               },
             ),
             TextButton(
