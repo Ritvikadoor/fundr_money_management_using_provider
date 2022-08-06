@@ -13,7 +13,7 @@ class ScreenTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var TransactionDb;
+     var TransactionDb;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff4b50c7),

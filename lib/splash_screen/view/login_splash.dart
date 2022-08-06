@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fundr_using_provider/home/view/screen_home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _username = TextEditingController();
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 237, 238, 255),
       resizeToAvoidBottomInset: true,
@@ -44,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: TextFormField(
-                    // controller: _username,
+                    controller: _username,
                     textCapitalization: TextCapitalization.sentences,
                     style: const TextStyle(
                         fontWeight: FontWeight.w600,
@@ -85,22 +89,22 @@ class LoginScreen extends StatelessWidget {
                     width: 150,
                     child: ElevatedButton(
                       onPressed: () {
-                        // if (_username.text.isNotEmpty) {
-                        //   addName(context);
-                        // } else {
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     const SnackBar(
-                        //       duration: Duration(milliseconds: 600),
-                        //       behavior: SnackBarBehavior.floating,
-                        //       backgroundColor: Color.fromARGB(255, 83, 83, 83),
-                        //       content: Text(
-                        //         'Please enter a name',
-                        //         style: TextStyle(
-                        //             color: Colors.white, letterSpacing: 2),
-                        //       ),
-                        //     ),
-                        //   );
-                        // }
+                        if (_username.text.isNotEmpty) {
+                          addName(context);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              duration: Duration(milliseconds: 600),
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Color.fromARGB(255, 83, 83, 83),
+                              content: Text(
+                                'Please enter a name',
+                                style: TextStyle(
+                                    color: Colors.white, letterSpacing: 2),
+                              ),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -117,5 +121,15 @@ class LoginScreen extends StatelessWidget {
         ]),
       ),
     );
+  }
+
+  Future<void> addName(BuildContext context) async {
+    // final preferences = await SharedPreferences.getInstance();
+    // await preferences.setString('name', _username.text);
+    // preferences.setBool('check', true);
+    // commonUserName = _username.text;
+
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => ScreenHome()));
   }
 }

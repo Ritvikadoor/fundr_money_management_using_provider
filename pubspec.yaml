@@ -46,6 +46,7 @@ dependencies:
   flutter_slidable: ^2.0.0
   syncfusion_flutter_charts: ^20.2.40
   month_year_picker: ^0.2.0+1
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:

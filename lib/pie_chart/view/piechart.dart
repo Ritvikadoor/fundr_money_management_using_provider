@@ -7,7 +7,8 @@ class StatisticsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _tabController;
+    TabController? _tabController;
+    // var _tabController;
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Color(0xff4b50c7)),

@@ -8,15 +8,16 @@ class ScreenSplashTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String commonUserName = '';
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
           child: Column(
         children: [
-          Lottie.asset(
-            "lib/assets/money_getstarted.json",
-            height: 500,
-          ),
+          // Lottie.asset(
+          //   "lib/assets/money_getstarted.json",
+          //   height: 500,
+          // ),
           Expanded(
             flex: 1,
             child: Center(
