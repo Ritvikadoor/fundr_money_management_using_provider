@@ -38,7 +38,7 @@ class ScreenCatagory extends StatelessWidget {
             child: Column(
               children: [
                 TabBar(
-                    // controller: _tabController,
+                    controller: _tabController,
                     indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(
                         25.0,

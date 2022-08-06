@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fundr_using_provider/home/view/screen_home.dart';
+import 'package:fundr_using_provider/home/view_models/home_provider.dart';
 import 'package:fundr_using_provider/splash_screen/view/screen_splash.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
 
 import 'package:timezone/data/latest_all.dart' as tz;
 
@@ -29,11 +32,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ScreenSplash(),
-      //  routes: {
-      //   ScreenAddTransaction.routeName: (ctx) => const ScreenAddTransaction(),
-      // },
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => HomeProvider())],
+      child: MaterialApp(
+        home: ScreenHome(),
+        //  routes: {
+        //   ScreenAddTransaction.routeName: (ctx) => const ScreenAddTransaction(),
+        // },
+      ),
     );
   }
 }

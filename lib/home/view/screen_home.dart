@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:fundr_using_provider/catagory/screen_catagory.dart';
+import 'package:fundr_using_provider/home/view_models/home_provider.dart';
 import 'package:fundr_using_provider/home/widgets/bottom_navigation.dart';
 import 'package:fundr_using_provider/pie_chart/view/piechart.dart';
 import 'package:fundr_using_provider/settings/view/setting_ui.dart';
 import 'package:fundr_using_provider/transaction/view/screen_transaction.dart';
+import 'package:provider/provider.dart';
 
 class ScreenHome extends StatelessWidget {
   ScreenHome({Key? key}) : super(key: key);
 
-  static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
+  // static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
 
   // @override
   // Widget build(BuildContext context) {
@@ -17,11 +19,17 @@ class ScreenHome extends StatelessWidget {
 // }
 
 // class _ScreenHomeState extends State<ScreenHome> {
-  final _pages = [
-    ScreenTransaction(),
-    ScreenCatagory(),
-    StatisticsScreen(),
-    ScreenSettings(),
+  // final _pages = [
+  //   ScreenTransaction(),
+  //   ScreenCatagory(),
+  //   StatisticsScreen(),
+  //   ScreenSettings(),
+  // ];
+  final pages = [
+    const ScreenTransaction(),
+    const ScreenCatagory(),
+    const StatisticsScreen(),
+    const ScreenSettings(),
   ];
 
   // @override
@@ -33,14 +41,17 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeScreenIndex = Provider.of<HomeProvider>(context);
+    int currentScreenIndex = homeScreenIndex.fetchCurrentIndex;
     return Scaffold(
-      bottomNavigationBar: MoneyManagerBottomNavigation(),
+      bottomNavigationBar: MoneyManagerBottomNavigation(
+        currentScreenIndex: currentScreenIndex,
+      ),
       body: SafeArea(
-        child: ValueListenableBuilder(
-            valueListenable: ScreenHome.selectedIndexNotifier,
-            builder: (BuildContext context, int updatedIndex, _) {
-              return _pages[updatedIndex];
-            }),
+        child:
+            Consumer<HomeProvider>(builder: (BuildContext context, value, _) {
+          return pages[currentScreenIndex];
+        }),
       ),
     );
   }

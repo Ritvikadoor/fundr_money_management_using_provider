@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:fundr_using_provider/home/view/screen_home.dart';
+import 'package:fundr_using_provider/home/view_models/home_provider.dart';
+import 'package:provider/provider.dart';
 
 class MoneyManagerBottomNavigation extends StatelessWidget {
-  const MoneyManagerBottomNavigation({Key? key}) : super(key: key);
-
+  const MoneyManagerBottomNavigation(
+      {Key? key, required this.currentScreenIndex})
+      : super(key: key);
+  final int currentScreenIndex;
   @override
   Widget build(BuildContext context) {
     // int? updatedIndex;
-    return ValueListenableBuilder(
-      valueListenable: ScreenHome.selectedIndexNotifier,
-      builder: (context, int updatedIndex, child) {
+    return Consumer<HomeProvider>(
+      builder: (context, value, _) {
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: ClipRRect(
@@ -18,9 +21,9 @@ class MoneyManagerBottomNavigation extends StatelessWidget {
                 selectedItemColor: Colors.white,
                 unselectedItemColor: const Color.fromARGB(255, 0, 0, 0),
                 elevation: 0,
-                currentIndex: updatedIndex,
+                currentIndex: currentScreenIndex,
                 onTap: (newIndex) {
-                  ScreenHome.selectedIndexNotifier.value = newIndex;
+                  value.updateScreenIndex(newIndex);
                 },
                 items: const [
                   BottomNavigationBarItem(
