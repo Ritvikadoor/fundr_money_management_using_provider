@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fundr_using_provider/transaction/viewmodel/transaction_db.dart';
 
 class ProfitCard extends StatelessWidget {
   const ProfitCard({Key? key}) : super(key: key);
@@ -63,7 +64,6 @@ class ProfitCard extends StatelessWidget {
   }
 
   Widget cardProfit() {
-    var TransactionDb;
     return Column(
       children: [
         Padding(
@@ -97,7 +97,6 @@ class ProfitCard extends StatelessWidget {
   }
 
   Widget cardIncome() {
-    var TransactionDb;
     return Column(
       children: [
         const Text(
@@ -138,7 +137,6 @@ class ProfitCard extends StatelessWidget {
   }
 
   Widget cardExpense() {
-    var TransactionDb;
     return Column(
       children: [
         const Text(
