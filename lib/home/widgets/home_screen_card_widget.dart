@@ -1,70 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:fundr_using_provider/transaction/viewmodel/transaction_db.dart';
-import 'package:provider/provider.dart';
 
 class ProfitCard extends StatelessWidget {
   const ProfitCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TransactionDb>(
-      builder: (context, value, child) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 30, left: 16, right: 16),
-          child: Container(
-            height: 250,
-            decoration: BoxDecoration(
-              color: const Color(0xff4b50c7),
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Row(
+    return Padding(
+      padding: const EdgeInsets.only(top: 30, left: 16, right: 16),
+      child: Container(
+        height: 250,
+        decoration: BoxDecoration(
+          color: const Color(0xff4b50c7),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Row(
+          children: [
+            Column(
               children: [
-                Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20, left: 25),
-                      child: Text(
-                        'PROFIT',
-                        style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            letterSpacing: 2),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, top: 5),
-                      child: Row(
-                        children: [
-                          cardProfit(),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const SizedBox(
-                            height: 50,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+                const Padding(
+                  padding: EdgeInsets.only(top: 20, left: 25),
+                  child: Text(
+                    'PROFIT',
+                    style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 2),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 30, top: 60),
-                  child: Column(
+                  padding: const EdgeInsets.only(left: 20, top: 5),
+                  child: Row(
                     children: [
-                      cardIncome(),
+                      cardProfit(),
                       const SizedBox(
                         height: 10,
                       ),
-                      cardExpense()
+                      const SizedBox(
+                        height: 50,
+                      )
                     ],
                   ),
                 ),
               ],
             ),
-          ),
-        );
-      },
+            Padding(
+              padding: const EdgeInsets.only(left: 30, top: 60),
+              child: Column(
+                children: [
+                  cardIncome(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  cardExpense()
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

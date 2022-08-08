@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fundr_using_provider/catagory/viewmodel/catagory_db.dart';
 import 'package:fundr_using_provider/catagory/widgets/expense_catagory_list.dart';
 import 'package:fundr_using_provider/catagory/widgets/income_catagory_list.dart';
 import 'package:fundr_using_provider/transaction/view/edit_transaction/screen_edit_screen_transaction.dart';
@@ -16,9 +17,9 @@ class _ScreenCategoryState extends State<ScreenCategory>
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    // CategoryDB().getCategories().then((value) {});
+    CategoryDB().getCategories().then((value) {});
 
-    // CategoryDB().refreshUI();
+    CategoryDB().refreshUI();
     super.initState();
   }
 
@@ -71,13 +72,10 @@ class _ScreenCategoryState extends State<ScreenCategory>
                         text: 'Expense',
                       ),
                     ]),
-                Expanded(
-                  child:
-                      TabBarView(controller: _tabController, children: const [
-                    IncomeCatagoryList(),
-                    ExpenseCatagoryList(),
-                  ]),
-                )
+                TabBarView(controller: _tabController, children: const [
+                  IncomeCatagoryList(),
+                  ExpenseCatagoryList(),
+                ])
               ],
             ),
           ),
