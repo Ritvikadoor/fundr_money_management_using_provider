@@ -2,6 +2,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 @HiveType(typeId: 3)
 class TransactionModel {
+  void TRANSACTION_DB_NAME = 'transaction_db';
+
   @HiveField(0)
   final String? id;
   @HiveField(1)

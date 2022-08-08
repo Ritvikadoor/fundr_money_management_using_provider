@@ -48,6 +48,7 @@ dependencies:
   month_year_picker: ^0.2.0+1
   shared_preferences: ^2.0.15
   provider: ^6.0.3
+  build_runner: ^1.7.0
 
 dev_dependencies:
   flutter_test:

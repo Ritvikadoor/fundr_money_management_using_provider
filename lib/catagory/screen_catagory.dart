@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:fundr_using_provider/catagory/widgets/expense_catagory_list.dart';
 import 'package:fundr_using_provider/catagory/widgets/income_catagory_list.dart';
+import 'package:fundr_using_provider/transaction/view/edit_transaction/screen_edit_screen_transaction.dart';
 
-class ScreenCatagory extends StatelessWidget {
-  const ScreenCatagory({Key? key}) : super(key: key);
+class ScreenCategory extends StatefulWidget {
+  const ScreenCategory({Key? key}) : super(key: key);
+
+  @override
+  State<ScreenCategory> createState() => _ScreenCategoryState();
+}
+
+class _ScreenCategoryState extends State<ScreenCategory>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    // CategoryDB().getCategories().then((value) {});
+
+    // CategoryDB().refreshUI();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var _tabController;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

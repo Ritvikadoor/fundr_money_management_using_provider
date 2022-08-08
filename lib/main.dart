@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fundr_using_provider/home/view/screen_home.dart';
 import 'package:fundr_using_provider/home/view_models/home_provider.dart';
 import 'package:fundr_using_provider/splash_screen/view/screen_splash.dart';
+import 'package:fundr_using_provider/transaction/viewmodel/transaction_db.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => HomeProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => HomeProvider()),
+        ChangeNotifierProvider(create: (context) => TransactionDb())
+      ],
       child: MaterialApp(
         home: ScreenHome(),
         //  routes: {

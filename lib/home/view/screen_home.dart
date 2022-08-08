@@ -27,7 +27,7 @@ class ScreenHome extends StatelessWidget {
   // ];
   final pages = [
     const ScreenTransaction(),
-    const ScreenCatagory(),
+    const ScreenCategory(),
     const StatisticsScreen(),
     const ScreenSettings(),
   ];
