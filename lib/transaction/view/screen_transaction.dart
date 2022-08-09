@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fundr_using_provider/home/view/screen_home.dart';
 import 'package:fundr_using_provider/home/widgets/home_screen_card_widget.dart';
 import 'package:fundr_using_provider/settings/models/settings_models.dart';
 import 'package:fundr_using_provider/transaction/view/edit_transaction/screen_edit_screen_transaction.dart';
-import 'package:fundr_using_provider/transaction/view/screen_add_transaction.dart';
-import 'package:fundr_using_provider/transaction/view/screen_seemore_transaction.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fundr_using_provider/transaction/viewmodel/transaction_db.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +13,13 @@ class ScreenTransaction extends StatelessWidget {
   Widget build(BuildContext context) {
     // var TransactionDb;
     return Scaffold(
+      // body: Text('hi'),
+      body: Column(
+        children: [
+          const ProfitCard(),
+          transactionList(),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff4b50c7),
         elevation: 0,
@@ -27,37 +31,6 @@ class ScreenTransaction extends StatelessWidget {
         },
         child: const Icon(Icons.add),
       ),
-      // body: Text('hi'),
-      body: Column(
-        children: [
-          const ProfitCard(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Recent',
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.left,
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SeeMoreTransaction(),
-                      ),
-                    );
-                  },
-                  child: const Text('See More:'),
-                ),
-              ],
-            ),
-          ),
-          transactionList(),
-        ],
-      ),
     );
   }
 
@@ -65,6 +38,7 @@ class ScreenTransaction extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16),
       child: Container(
+        height: 300,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: const Color.fromARGB(255, 237, 238, 255),
