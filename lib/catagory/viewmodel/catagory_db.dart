@@ -11,18 +11,16 @@ abstract class CategorDbFunctions {
   Future<void> clearCategory();
 }
 
-class CategoryDB implements CategorDbFunctions {
-  CategoryDB._internal();
-  static CategoryDB instance = CategoryDB._internal();
+class CategoryDB extends CategorDbFunctions with ChangeNotifier {
+  // CategoryDB._internal();
+  // static CategoryDB instance = CategoryDB._internal();
 
-  factory CategoryDB() {
-    return instance;
-  }
+  // factory CategoryDB() {
+  //   return instance;
+  // }
 
-  ValueNotifier<List<CategoryModel>> incomeCatagoryListListener =
-      ValueNotifier([]);
-  ValueNotifier<List<CategoryModel>> expenseCatagoryListListener =
-      ValueNotifier([]);
+  List<CategoryModel> incomeCatagoryListListener = [];
+  List<CategoryModel> expenseCatagoryListListener = [];
 
   @override
   Future<void> insertCategory(CategoryModel value) async {
@@ -39,19 +37,18 @@ class CategoryDB implements CategorDbFunctions {
 
   Future<void> refreshUI() async {
     final allCategories = await getCategories();
-    incomeCatagoryListListener.value.clear();
-    expenseCatagoryListListener.value.clear();
+    incomeCatagoryListListener.clear();
+    expenseCatagoryListListener.clear();
 
     Future.forEach(allCategories, (CategoryModel category) {
       if (category.type == CategoryType.income) {
-        incomeCatagoryListListener.value.add(category);
+        incomeCatagoryListListener.add(category);
       } else {
-        expenseCatagoryListListener.value.add(category);
+        expenseCatagoryListListener.add(category);
       }
     });
 
-    incomeCatagoryListListener.notifyListeners();
-    expenseCatagoryListListener.notifyListeners();
+    notifyListeners();
   }
 
   @override

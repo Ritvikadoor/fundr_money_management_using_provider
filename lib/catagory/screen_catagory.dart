@@ -47,6 +47,7 @@ class _ScreenCategoryState extends State<ScreenCategory>
           child: const Icon(Icons.add),
         ),
       ),
+      // body: Text('hey'),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SafeArea(

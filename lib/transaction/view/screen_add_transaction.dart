@@ -162,39 +162,39 @@ class ScreenAddTransaction extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(30.0),
                       ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          hint: const Text(
-                            'Select Category',
-                            style: TextStyle(overflow: TextOverflow.ellipsis),
-                          ),
-                          value: _categoryID,
-                          items: (_selectedCategoryType == CategoryType.income
-                                  ? CategoryDB().incomeCatagoryListListener
-                                  : CategoryDB().expenseCatagoryListListener)
-                              .value
-                              .map(
-                            (e) {
-                              return DropdownMenuItem(
-                                value: e.id,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text(e.name),
-                                ),
-                                onTap: () {
-                                  var _selectedCategoryModel = e;
-                                },
-                              );
-                            },
-                          ).toList(),
-                          onChanged: (selectedValue) {
-                            // setState(() {
-                            //   _categoryID = selectedValue;
-                            // });
-                          },
-                        ),
-                      ),
+                      // child: DropdownButtonHideUnderline(
+                      //   child: DropdownButton<String>(
+                      //     isExpanded: true,
+                      //     hint: const Text(
+                      //       'Select Category',
+                      //       style: TextStyle(overflow: TextOverflow.ellipsis),
+                      //     ),
+                      //     value: _categoryID,
+                      //     items: (_selectedCategoryType == CategoryType.income
+                      //             ? CategoryDB().incomeCatagoryListListener
+                      //             : CategoryDB().expenseCatagoryListListener)
+                      //         .value
+                      //         .map(
+                      //       (e) {
+                      //         return DropdownMenuItem(
+                      //           value: e.id,
+                      //           child: Padding(
+                      //             padding: const EdgeInsets.only(left: 10),
+                      //             child: Text(e.name),
+                      //           ),
+                      //           onTap: () {
+                      //             var _selectedCategoryModel = e;
+                      //           },
+                      //         );
+                      //       },
+                      //     ).toList(),
+                      //     onChanged: (selectedValue) {
+                      //       // setState(() {
+                      //       //   _categoryID = selectedValue;
+                      //       // });
+                      //     },
+                      //   ),
+                      // ),
                     ),
                   ),
                   Padding(

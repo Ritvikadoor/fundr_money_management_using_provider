@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fundr_using_provider/catagory/viewmodel/catagory_db.dart';
 import 'package:fundr_using_provider/home/view/screen_home.dart';
 import 'package:fundr_using_provider/home/view_models/home_provider.dart';
 import 'package:fundr_using_provider/splash_screen/view/screen_splash.dart';
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => HomeProvider()),
-        ChangeNotifierProvider(create: (context) => TransactionDb())
+        ChangeNotifierProvider(create: (context) => TransactionDb()),
+        ChangeNotifierProvider(create: (context) => CategoryDB())
       ],
       child: MaterialApp(
         home: ScreenHome(),
