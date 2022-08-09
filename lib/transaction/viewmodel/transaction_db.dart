@@ -5,7 +5,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final TRANSACTION_DB_NAME = 'transaction_db';
+// final TRANSACTION_DB_NAME = 'transaction_db';
 
 abstract class TransactionDbFunction {
   Future<void> addTransaction(TransactionModel obj);
@@ -17,30 +17,16 @@ abstract class TransactionDbFunction {
 }
 
 class TransactionDb extends TransactionDbFunction with ChangeNotifier {
-  TransactionDb._internal();
-  static TransactionDb instance = TransactionDb._internal();
-
-  factory TransactionDb() {
-    return instance;
-  }
-
-  ValueNotifier<List<TransactionModel>> todayNotifier = ValueNotifier([]);
-  ValueNotifier<List<TransactionModel>> yesterdayNotifier = ValueNotifier([]);
-  ValueNotifier<List<TransactionModel>> weeklyNotifier = ValueNotifier([]);
-  ValueNotifier<List<TransactionModel>> monthNotifier = ValueNotifier([]);
-  ValueNotifier<List<TransactionModel>> transationListNotifier =
-      ValueNotifier([]);
-
-  ValueNotifier<List<TransactionModel>> incomeChartListNotifier =
-      ValueNotifier([]);
-
-  ValueNotifier<List<TransactionModel>> expenseChartListNotifier =
-      ValueNotifier([]);
-  ValueNotifier<List<TransactionModel>> todayListNotifier = ValueNotifier([]);
-  ValueNotifier<List<TransactionModel>> yesterdayListNotifier =
-      ValueNotifier([]);
-  ValueNotifier<List<TransactionModel>> weeklyListNotifier = ValueNotifier([]);
-  ValueNotifier<List<TransactionModel>> monthlyListNotifier = ValueNotifier([]);
+  final String TRANSACTION_DB_NAME = 'transaction_db';
+  List<TransactionModel> incomeList = [];
+  List<TransactionModel> expenseList = [];
+  List<TransactionModel> todayNotifier = [];
+  List<TransactionModel> yesterDayNotifier = [];
+  List<TransactionModel> weeklyNotifier = [];
+  List<TransactionModel> monthlyNotifier = [];
+  List<TransactionModel> transactionListNotifier = [];
+  List<TransactionModel> incomeChartListNotifier = [];
+  List<TransactionModel> expenseChartListNotifier = [];
 
   String todayDate = DateFormat.yMd().format(DateTime.now());
   String yesterdayDate =
@@ -62,26 +48,24 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
   ValueNotifier<double> incomeNotifier = ValueNotifier(0);
   ValueNotifier<double> expenseNotifier = ValueNotifier(0);
 
+  double incomeTotal = 0;
+  double expenseTotal = 0;
+
   Future<void> refresh() async {
     final preferences = SharedPreferences.getInstance();
-
+    expenseTotal = 0;
+    incomeTotal = 0;
+    incomeList.clear();
+    expenseList.clear();
     var _list = await getAllTransactions();
     _list = _list.reversed.toList();
     _list.sort((first, second) => second.date.compareTo(first.date));
 
-    transationListNotifier.value.clear();
-    transationListNotifier.value.addAll(_list);
-    incomeChartListNotifier.value.clear();
-    expenseChartListNotifier.value.clear();
-    balacneNotifier.value = 0;
-    incomeNotifier.value = 0;
-    expenseNotifier.value = 0;
-
     for (var data in _list) {
       if (data.type == CategoryType.income) {
-        incomeChartListNotifier.value.add(data);
+        incomeChartListNotifier.add(data);
       } else if (data.type == CategoryType.expense) {
-        expenseChartListNotifier.value.add(data);
+        expenseChartListNotifier.add(data);
       }
     }
 
@@ -95,9 +79,9 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
       }
     });
     balacneNotifier.value = incomeNotifier.value - expenseNotifier.value;
-    transationListNotifier.notifyListeners();
-    incomeChartListNotifier.notifyListeners();
-    expenseChartListNotifier.notifyListeners();
+    // transactionListNotifier.notifyListeners();
+    // incomeChartListNotifier.notifyListeners();
+    // expenseChartListNotifier.notifyListeners();
     balacneNotifier.notifyListeners();
     incomeNotifier.notifyListeners();
     expenseNotifier.notifyListeners();
@@ -106,7 +90,6 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
   @override
   Future<List<TransactionModel>> getAllTransactions() async {
     final _db = await Hive.openBox<TransactionModel>(TRANSACTION_DB_NAME);
-
     return _db.values.toList();
   }
 
@@ -140,10 +123,10 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
     var selectedlist = await getAllTransactions();
 
     int weekdateint = int.parse(weeklyDate);
-    todayListNotifier.value.clear();
-    yesterdayListNotifier.value.clear();
-    weeklyListNotifier.value.clear();
-    monthlyListNotifier.value.clear();
+    // todayListNotifier.value.clear();
+    // yesterdayListNotifier.value.clear();
+    // weeklyListNotifier.value.clear();
+    // monthlyListNotifier.value.clear();
 
     await Future.forEach(selectedlist, (TransactionModel singleModel) {
       String eachModelDate = DateFormat.yMd().format(singleModel.date);
@@ -151,13 +134,13 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
           int.parse(DateFormat('yyyyMMdd').format(singleModel.date));
 
       if (todayDate == eachModelDate) {
-        todayListNotifier.value.add(singleModel);
+        todayNotifier.add(singleModel);
       }
       if (yesterdayDate == eachModelDate) {
-        yesterdayListNotifier.value.add(singleModel);
+        yesterDayNotifier.add(singleModel);
       }
       if (eachmodeldateint >= (weekdateint - 7)) {
-        weeklyListNotifier.value.add(singleModel);
+        weeklyNotifier.add(singleModel);
       }
     });
   }

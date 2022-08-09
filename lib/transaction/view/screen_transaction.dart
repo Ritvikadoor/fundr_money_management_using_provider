@@ -5,6 +5,7 @@ import 'package:fundr_using_provider/transaction/view/edit_transaction/screen_ed
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fundr_using_provider/transaction/viewmodel/transaction_db.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ScreenTransaction extends StatelessWidget {
   const ScreenTransaction({Key? key}) : super(key: key);
@@ -43,10 +44,8 @@ class ScreenTransaction extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           color: const Color.fromARGB(255, 237, 238, 255),
         ),
-        child: ValueListenableBuilder(
-          valueListenable: TransactionDb.instance.transationListNotifier,
-          builder:
-              (BuildContext ctx, List<TransactionModel> newList, Widget? _) {
+        child: Consumer(
+          builder: (BuildContext ctx, List<TransactionModel> newList, _) {
             return ListView.separated(
               itemBuilder: ((context, index) {
                 final value = newList[index];

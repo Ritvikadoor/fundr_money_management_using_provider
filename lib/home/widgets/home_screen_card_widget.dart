@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fundr_using_provider/transaction/view/screen_seemore_transaction.dart';
 import 'package:fundr_using_provider/transaction/viewmodel/transaction_db.dart';
+import 'package:provider/provider.dart';
 
 class ProfitCard extends StatelessWidget {
   const ProfitCard({Key? key}) : super(key: key);
@@ -102,9 +103,8 @@ class ProfitCard extends StatelessWidget {
               color: const Color.fromARGB(255, 237, 238, 255),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: ValueListenableBuilder(
-              valueListenable: TransactionDb.instance.balacneNotifier,
-              builder: (BuildContext context, double totalBalance, Widget? _) {
+            child: Consumer<TransactionDb>(
+              builder: (context, totalBalance, Widget? _) {
                 return Center(
                   child: Text(
                     totalBalance.toString(),
@@ -136,9 +136,8 @@ class ProfitCard extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        ValueListenableBuilder(
-          valueListenable: TransactionDb.instance.incomeNotifier,
-          builder: (BuildContext context, double incomeValue, Widget? _) {
+        Consumer<TransactionDb>(
+          builder: (context, incomeValue, Widget? _) {
             return Container(
               height: 45,
               width: 140,
@@ -176,9 +175,8 @@ class ProfitCard extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        ValueListenableBuilder(
-          valueListenable: TransactionDb.instance.expenseNotifier,
-          builder: ((BuildContext context, expensevalue, Widget? _) {
+        Consumer<TransactionDb>(
+          builder: ((context, expensevalue, _) {
             return Container(
               height: 45,
               width: 140,
