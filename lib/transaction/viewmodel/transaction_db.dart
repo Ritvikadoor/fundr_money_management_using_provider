@@ -50,6 +50,7 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
 
   double incomeTotal = 0;
   double expenseTotal = 0;
+  double recentTotal = 0;
 
   Future<void> refresh() async {
     final preferences = SharedPreferences.getInstance();

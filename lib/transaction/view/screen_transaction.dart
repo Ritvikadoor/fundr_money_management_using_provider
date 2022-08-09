@@ -12,7 +12,6 @@ class ScreenTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var TransactionDb;
     return Scaffold(
       // body: Text('hi'),
       body: Column(
@@ -44,11 +43,11 @@ class ScreenTransaction extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           color: const Color.fromARGB(255, 237, 238, 255),
         ),
-        child: Consumer(
-          builder: (BuildContext ctx, List<TransactionModel> newList, _) {
+        child: Consumer<TransactionDb>(
+          builder: (context, valued, _) {
             return ListView.separated(
-              itemBuilder: ((context, index) {
-                final value = newList[index];
+              itemBuilder: ((BuildContext context, int index) {
+                final value = valued.incomeList[index];
 
                 return Slidable(
                   //key: Key(value.id!),
@@ -100,12 +99,12 @@ class ScreenTransaction extends StatelessWidget {
                                     size: 40,
                                   ),
                           ),
-                          title: Text(value.category.name),
+                          title: Text(value.category.name.toString()),
                           subtitle: Text(
                             parseDate(value.date),
                           ),
                           trailing: Text(
-                            '\u{20B9} ${value.amount}',
+                            '\u{20B9} ${value.amount.toString()}',
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w500),
                           ),
@@ -120,7 +119,8 @@ class ScreenTransaction extends StatelessWidget {
                   height: 2,
                 );
               },
-              itemCount: newList.length < 6 ? newList.length : 6,
+              itemCount:
+                  valued.incomeList.length < 5 ? valued.incomeList.length : 5,
             );
           },
         ),
@@ -152,10 +152,9 @@ class ScreenTransaction extends StatelessWidget {
             TextButton(
               child: const Text('Confirm'),
               onPressed: () {
-                var TransactionDb;
-                TransactionDb.instance.deleteTransaction(id);
-                TransactionDb.instance.refresh();
-                Navigator.of(context).pop();
+                // TransactionDb.instance.deleteTransaction(id);
+                // TransactionDb.instance.refresh();
+                // Navigator.of(context).pop();
               },
             ),
             TextButton(

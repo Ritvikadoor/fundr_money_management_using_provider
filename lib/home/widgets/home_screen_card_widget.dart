@@ -107,7 +107,7 @@ class ProfitCard extends StatelessWidget {
               builder: (context, totalBalance, Widget? _) {
                 return Center(
                   child: Text(
-                    totalBalance.toString(),
+                    totalBalance.recentTotal.toString(),
                     style: const TextStyle(
                         color: Colors.black,
                         fontSize: 30,
@@ -147,7 +147,7 @@ class ProfitCard extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  incomeValue.toString(),
+                  incomeValue.incomeTotal.toString(),
                   style: const TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -185,7 +185,7 @@ class ProfitCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
-                child: Text(expensevalue.toString(),
+                child: Text(expensevalue.expenseTotal.toString(),
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
