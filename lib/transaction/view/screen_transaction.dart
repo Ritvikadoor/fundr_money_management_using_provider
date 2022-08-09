@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fundr_using_provider/catagory/model/catagory_model.dart';
 import 'package:fundr_using_provider/home/widgets/home_screen_card_widget.dart';
 import 'package:fundr_using_provider/settings/models/settings_models.dart';
 import 'package:fundr_using_provider/transaction/view/edit_transaction/screen_edit_screen_transaction.dart';

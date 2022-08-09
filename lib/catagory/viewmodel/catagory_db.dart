@@ -26,12 +26,16 @@ class CategoryDB extends CategorDbFunctions with ChangeNotifier {
   Future<void> insertCategory(CategoryModel value) async {
     final categoryDB = await Hive.openBox<CategoryModel>(CATEGORY_DB_NAME);
     await categoryDB.put(value.id, value);
+    print("object");
+    notifyListeners();
     refreshUI();
   }
 
   @override
   Future<List<CategoryModel>> getCategories() async {
     final categoryDB = await Hive.openBox<CategoryModel>(CATEGORY_DB_NAME);
+    notifyListeners();
+
     return categoryDB.values.toList();
   }
 

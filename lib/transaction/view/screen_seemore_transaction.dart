@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fundr_using_provider/catagory/model/catagory_model.dart';
+import 'package:fundr_using_provider/transaction/model/transaction_model.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 
 import 'package:fundr_using_provider/settings/models/settings_models.dart';

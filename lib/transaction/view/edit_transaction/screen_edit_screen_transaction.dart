@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fundr_using_provider/catagory/model/catagory_model.dart';
 import 'package:fundr_using_provider/catagory/viewmodel/catagory_db.dart';
 import 'package:fundr_using_provider/settings/models/settings_models.dart';
+import 'package:fundr_using_provider/transaction/model/transaction_model.dart';
 import 'package:fundr_using_provider/transaction/view/screen_add_transaction.dart';
 import 'package:intl/intl.dart';
 

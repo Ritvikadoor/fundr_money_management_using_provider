@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fundr_using_provider/catagory/viewmodel/catagory_db.dart';
+import 'package:fundr_using_provider/catagory/viewmodel/category_pop.dart';
 import 'package:fundr_using_provider/home/view/screen_home.dart';
 import 'package:fundr_using_provider/home/view_models/home_provider.dart';
 import 'package:fundr_using_provider/splash_screen/view/screen_splash.dart';
@@ -10,21 +11,24 @@ import 'package:provider/provider.dart';
 
 import 'package:timezone/data/latest_all.dart' as tz;
 
+import 'catagory/model/catagory_model.dart';
+import 'transaction/model/transaction_model.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
   await Hive.initFlutter();
 
-  // if (!Hive.isAdapterRegistered(CategoryTypeAdapter().typeId)) {
-  //   Hive.registerAdapter(CategoryTypeAdapter());
-  // }
+  if (!Hive.isAdapterRegistered(CategoryTypeAdapter().typeId)) {
+    Hive.registerAdapter(CategoryTypeAdapter());
+  }
 
-  // if (!Hive.isAdapterRegistered(CategoryModelAdapter().typeId)) {
-  //   Hive.registerAdapter(CategoryModelAdapter());
-  // }
-  // if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
-  //   Hive.registerAdapter(TransactionModelAdapter());
-  // }
+  if (!Hive.isAdapterRegistered(CategoryModelAdapter().typeId)) {
+    Hive.registerAdapter(CategoryModelAdapter());
+  }
+  if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
+    Hive.registerAdapter(TransactionModelAdapter());
+  }
 
   runApp(const MyApp());
 }
@@ -38,7 +42,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => HomeProvider()),
         ChangeNotifierProvider(create: (context) => TransactionDb()),
-        ChangeNotifierProvider(create: (context) => CategoryDB())
+        ChangeNotifierProvider(create: (context) => CategoryDB()),
+        ChangeNotifierProvider(create: (context) => CategoryPopUp())
       ],
       child: MaterialApp(
         home: ScreenHome(),

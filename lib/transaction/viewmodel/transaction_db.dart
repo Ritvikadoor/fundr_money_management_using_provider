@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fundr_using_provider/catagory/model/catagory_model.dart';
 import 'package:fundr_using_provider/catagory/viewmodel/catagory_db.dart';
 import 'package:fundr_using_provider/settings/models/settings_models.dart';
+import 'package:fundr_using_provider/transaction/model/transaction_model.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';

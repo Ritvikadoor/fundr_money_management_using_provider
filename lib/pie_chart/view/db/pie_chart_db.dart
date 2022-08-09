@@ -1,4 +1,5 @@
 import 'package:fundr_using_provider/settings/models/settings_models.dart';
+import 'package:fundr_using_provider/transaction/model/transaction_model.dart';
 
 class chartData {
   String? category;

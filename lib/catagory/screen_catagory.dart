@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fundr_using_provider/catagory/viewmodel/catagory_db.dart';
-import 'package:fundr_using_provider/catagory/widgets/expense_catagory_list.dart';
-import 'package:fundr_using_provider/catagory/widgets/income_catagory_list.dart';
-import 'package:fundr_using_provider/transaction/view/edit_transaction/screen_edit_screen_transaction.dart';
+import 'package:fundr_using_provider/catagory/viewmodel/category_pop.dart';
+import 'package:fundr_using_provider/home/view_models/home_provider.dart';
+import 'package:provider/provider.dart';
+
+import 'widgets/catagory_add_popup.dart';
+import 'widgets/expense_catagory_list.dart';
+import 'widgets/income_catagory_list.dart';
 
 class ScreenCategory extends StatefulWidget {
   const ScreenCategory({Key? key}) : super(key: key);
@@ -17,9 +21,9 @@ class _ScreenCategoryState extends State<ScreenCategory>
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    CategoryDB().getCategories().then((value) {});
+    context.read<CategoryDB>().getCategories().then((value) {});
 
-    CategoryDB().refreshUI();
+    context.read<CategoryDB>().refreshUI();
     super.initState();
   }
 
@@ -40,14 +44,13 @@ class _ScreenCategoryState extends State<ScreenCategory>
           backgroundColor: const Color(0xff4b50c7),
           elevation: 0,
           onPressed: () {
-            // if (ScreenHome.selectedIndexNotifier.value == 1) {
-            //   showCategoryAddPopup(context);
-            // }
+            if (context.read<HomeProvider>().selectedIndexNotifier == 1) {
+              context.read<CategoryPopUp>().showCategoryAddPopup(context);
+            }
           },
           child: const Icon(Icons.add),
         ),
       ),
-      // body: Text('hey'),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SafeArea(
@@ -73,10 +76,13 @@ class _ScreenCategoryState extends State<ScreenCategory>
                         text: 'Expense',
                       ),
                     ]),
-                TabBarView(controller: _tabController, children: const [
-                  IncomeCatagoryList(),
-                  ExpenseCatagoryList(),
-                ])
+                Expanded(
+                  child:
+                      TabBarView(controller: _tabController, children: const [
+                    IncomeCatagoryList(),
+                    ExpenseCatagoryList(),
+                  ]),
+                )
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:hive_flutter/adapters.dart';
+part 'catagory_model.g.dart';
 
 @HiveType(typeId: 2)
 enum CategoryType {
