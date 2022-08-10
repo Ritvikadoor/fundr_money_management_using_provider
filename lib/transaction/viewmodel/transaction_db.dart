@@ -114,28 +114,28 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
     incomeChartListNotifier.clear();
     expenseChartListNotifier.clear();
     notifyListeners();
-    // balacneNotifier.value = 0;
-    // incomeNotifier.value = 0;
-    // expenseNotifier.value = 0;
+    balacneNotifier = 0;
+    incomeNotifier = 0;
+    expenseNotifier = 0;
 
-    // for (var data in _list) {
-    //   if (data.type == CategoryType.income) {
-    //     incomeChartListNotifier.value.add(data);
-    //   } else if (data.type == CategoryType.expense) {
-    //     expenseChartListNotifier.value.add(data);
-    //   }
-    // }
+    for (var data in _list) {
+      if (data.type == CategoryType.income) {
+        incomeChartListNotifier.add(data);
+      } else if (data.type == CategoryType.expense) {
+        expenseChartListNotifier.add(data);
+      }
+    }
 
-    // await Future.forEach(_list, (TransactionModel category) {
-    //   balacneNotifier.value = balacneNotifier.value + category.amount;
+    await Future.forEach(_list, (TransactionModel category) {
+      balacneNotifier = balacneNotifier + category.amount;
 
-    //   if (category.type == CategoryType.income) {
-    //     incomeNotifier.value = incomeNotifier.value + category.amount;
-    //   } else if (category.type == CategoryType.expense) {
-    //     expenseNotifier.value = expenseNotifier.value + category.amount;
-    //   }
-    // });
-    // balacneNotifier.value = incomeNotifier.value - expenseNotifier.value;
+      if (category.type == CategoryType.income) {
+        incomeNotifier = incomeNotifier + category.amount;
+      } else if (category.type == CategoryType.expense) {
+        expenseNotifier = expenseNotifier + category.amount;
+      }
+    });
+    balacneNotifier = incomeNotifier - expenseNotifier;
     // transationListNotifier.notifyListeners();
     // incomeChartListNotifier.notifyListeners();
     // expenseChartListNotifier.notifyListeners();

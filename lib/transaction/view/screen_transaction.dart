@@ -157,14 +157,16 @@ class ScreenTransaction extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            TextButton(
-              child: const Text('Confirm'),
-              onPressed: () {
-                // TransactionDb.instance.deleteTransaction(id);
-                // TransactionDb.instance.refresh();
-                // Navigator.of(context).pop();
-              },
-            ),
+            Consumer<TransactionDb>(builder: (context, deleteValue, _) {
+              return TextButton(
+                child: const Text('Confirm'),
+                onPressed: () {
+                  deleteValue.deleteTransaction(id);
+                  deleteValue.refresh();
+                  Navigator.of(context).pop();
+                },
+              );
+            }),
             TextButton(
               child: const Text('Cancel'),
               onPressed: () {

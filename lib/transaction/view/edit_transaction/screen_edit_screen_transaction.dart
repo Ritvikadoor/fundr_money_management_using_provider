@@ -141,24 +141,23 @@ class EditScreenTransaction extends StatelessWidget {
                     ],
                   ),
 
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  //   child: Container(
-                  //     height: 60,
-                  //     padding: const EdgeInsets.all(5.0),
-                  //     decoration: BoxDecoration(
-                  //       color: Colors.white,
-                  //       borderRadius: BorderRadius.circular(30.0),
-                  //     ),
-                  //     child: DropdownButtonHideUnderline(
-                  //         child: context
-                  //             .read<ScreenAddTrandactionProvider>()
-                  //             .dropDownBtn(
-                  //               context,
-                  //               value,
-                  //             )),
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Container(
+                      height: 60,
+                      padding: const EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                          child: context
+                              .read<ScreenAddTrandactionProvider>()
+                              .dropDownBtn(
+                                context,
+                              )),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(

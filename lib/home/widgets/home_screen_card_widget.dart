@@ -104,10 +104,10 @@ class ProfitCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Consumer<TransactionDb>(
-              builder: (context, totalBalance, Widget? _) {
+              builder: (BuildContext context, totalBalance, _) {
                 return Center(
                   child: Text(
-                    totalBalance.recentTotal.toString(),
+                    totalBalance.balacneNotifier.toString(),
                     style: const TextStyle(
                         color: Colors.black,
                         fontSize: 30,
@@ -147,7 +147,7 @@ class ProfitCard extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  incomeValue.incomeTotal.toString(),
+                  incomeValue.incomeNotifier.toString(),
                   style: const TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -185,7 +185,7 @@ class ProfitCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
-                child: Text(expensevalue.expenseTotal.toString(),
+                child: Text(expensevalue.expenseNotifier.toString(),
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
