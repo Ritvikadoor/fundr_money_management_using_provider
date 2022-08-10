@@ -10,23 +10,8 @@ import 'package:provider/provider.dart';
 class ScreenHome extends StatelessWidget {
   ScreenHome({Key? key}) : super(key: key);
 
-  // static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
-
-  // @override
-  // Widget build(BuildContext context) {
-// //   @override
-//   State<ScreenHome> createState() => _ScreenHomeState();{
-// }
-
-// class _ScreenHomeState extends State<ScreenHome> {
-  // final _pages = [
-  //   ScreenTransaction(),
-  //   ScreenCatagory(),
-  //   StatisticsScreen(),
-  //   ScreenSettings(),
-  // ];
   final pages = [
-    const ScreenTransaction(),
+    ScreenTransaction(),
     const ScreenCategory(),
     const StatisticsScreen(),
     const ScreenSettings(),

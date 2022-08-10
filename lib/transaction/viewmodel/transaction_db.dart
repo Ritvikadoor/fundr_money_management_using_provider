@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fundr_using_provider/catagory/model/catagory_model.dart';
 import 'package:fundr_using_provider/catagory/viewmodel/catagory_db.dart';
-import 'package:fundr_using_provider/settings/models/settings_models.dart';
 import 'package:fundr_using_provider/transaction/model/transaction_model.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +18,11 @@ abstract class TransactionDbFunction {
 }
 
 class TransactionDb extends TransactionDbFunction with ChangeNotifier {
+  TransactionDb() {
+    refresh();
+  }
+  // ValueNotifier<List<TransactionModel>> selectedlist =
+  //     TransactionDb.transactionListNotifier;
   final String TRANSACTION_DB_NAME = 'transaction_db';
   List<TransactionModel> incomeList = [];
   List<TransactionModel> expenseList = [];
@@ -29,6 +33,10 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
   List<TransactionModel> transactionListNotifier = [];
   List<TransactionModel> incomeChartListNotifier = [];
   List<TransactionModel> expenseChartListNotifier = [];
+  List<TransactionModel> todayListNotifier = [];
+  List<TransactionModel> yesterdayListNotifier = [];
+  List<TransactionModel> weeklyListNotifier = [];
+  List<TransactionModel> monthlyListNotifier = [];
 
   String todayDate = DateFormat.yMd().format(DateTime.now());
   String yesterdayDate =
@@ -46,53 +54,100 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
     refresh();
   }
 
-  ValueNotifier<double> balacneNotifier = ValueNotifier(0);
-  ValueNotifier<double> incomeNotifier = ValueNotifier(0);
-  ValueNotifier<double> expenseNotifier = ValueNotifier(0);
+  double balacneNotifier = 0;
+  double incomeNotifier = 0;
+  double expenseNotifier = 0;
 
   double incomeTotal = 0;
   double expenseTotal = 0;
   double recentTotal = 0;
 
+  // Future<void> refresh() async {
+  //   final preferences = SharedPreferences.getInstance();
+
+  //   var _list = await getAllTransactions();
+  //   _list = _list.reversed.toList();
+  //   incomeList.clear();
+  //   incomeList.addAll(_list);
+  //   notifyListeners();
+  //   _list.sort((first, second) => second.date.compareTo(first.date));
+
+  //   for (var data in _list) {
+  //     if (data.type == CategoryType.income) {
+  //       incomeChartListNotifier.add(data);
+  //     } else if (data.type == CategoryType.expense) {
+  //       expenseChartListNotifier.add(data);
+  //     }
+  //   }
+
+  //   await Future.forEach(_list, (TransactionModel category) {
+  //     balacneNotifier = balacneNotifier + category.amount;
+
+  //     if (category.type == CategoryType.income) {
+  //       incomeNotifier = incomeNotifier + category.amount;
+  //     } else if (category.type == CategoryType.expense) {
+  //       expenseNotifier = expenseNotifier + category.amount;
+  //     }
+  //   });
+  //   balacneNotifier = incomeNotifier - expenseNotifier;
+  //   // transactionListNotifier.notifyListeners();
+  //   // incomeChartListNotifier.notifyListeners();
+  //   // expenseChartListNotifier.notifyListeners();
+  //   // balacneNotifier.notifyListeners();
+  //   // incomeNotifier.notifyListeners();
+  //   // expenseNotifier.notifyListeners();
+  //   expenseTotal = 0;
+  //   incomeTotal = 0;
+  //   incomeList.clear();
+  //   expenseList.clear();
+  //   notifyListeners();
+  // }
   Future<void> refresh() async {
     final preferences = SharedPreferences.getInstance();
-    expenseTotal = 0;
-    incomeTotal = 0;
-    incomeList.clear();
-    expenseList.clear();
+
     var _list = await getAllTransactions();
     _list = _list.reversed.toList();
     _list.sort((first, second) => second.date.compareTo(first.date));
 
-    for (var data in _list) {
-      if (data.type == CategoryType.income) {
-        incomeChartListNotifier.add(data);
-      } else if (data.type == CategoryType.expense) {
-        expenseChartListNotifier.add(data);
-      }
-    }
+    transactionListNotifier.clear();
+    transactionListNotifier.addAll(_list);
+    incomeChartListNotifier.clear();
+    expenseChartListNotifier.clear();
+    notifyListeners();
+    // balacneNotifier.value = 0;
+    // incomeNotifier.value = 0;
+    // expenseNotifier.value = 0;
 
-    await Future.forEach(_list, (TransactionModel category) {
-      balacneNotifier.value = balacneNotifier.value + category.amount;
+    // for (var data in _list) {
+    //   if (data.type == CategoryType.income) {
+    //     incomeChartListNotifier.value.add(data);
+    //   } else if (data.type == CategoryType.expense) {
+    //     expenseChartListNotifier.value.add(data);
+    //   }
+    // }
 
-      if (category.type == CategoryType.income) {
-        incomeNotifier.value = incomeNotifier.value + category.amount;
-      } else if (category.type == CategoryType.expense) {
-        expenseNotifier.value = expenseNotifier.value + category.amount;
-      }
-    });
-    balacneNotifier.value = incomeNotifier.value - expenseNotifier.value;
-    // transactionListNotifier.notifyListeners();
+    // await Future.forEach(_list, (TransactionModel category) {
+    //   balacneNotifier.value = balacneNotifier.value + category.amount;
+
+    //   if (category.type == CategoryType.income) {
+    //     incomeNotifier.value = incomeNotifier.value + category.amount;
+    //   } else if (category.type == CategoryType.expense) {
+    //     expenseNotifier.value = expenseNotifier.value + category.amount;
+    //   }
+    // });
+    // balacneNotifier.value = incomeNotifier.value - expenseNotifier.value;
+    // transationListNotifier.notifyListeners();
     // incomeChartListNotifier.notifyListeners();
     // expenseChartListNotifier.notifyListeners();
-    balacneNotifier.notifyListeners();
-    incomeNotifier.notifyListeners();
-    expenseNotifier.notifyListeners();
+    // balacneNotifier.notifyListeners();
+    // incomeNotifier.notifyListeners();
+    // expenseNotifier.notifyListeners();
   }
 
   @override
   Future<List<TransactionModel>> getAllTransactions() async {
     final _db = await Hive.openBox<TransactionModel>(TRANSACTION_DB_NAME);
+
     return _db.values.toList();
   }
 
@@ -130,6 +185,7 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
     // yesterdayListNotifier.value.clear();
     // weeklyListNotifier.value.clear();
     // monthlyListNotifier.value.clear();
+    notifyListeners();
 
     await Future.forEach(selectedlist, (TransactionModel singleModel) {
       String eachModelDate = DateFormat.yMd().format(singleModel.date);

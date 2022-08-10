@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fundr_using_provider/catagory/model/catagory_model.dart';
 import 'package:fundr_using_provider/transaction/model/transaction_model.dart';
+import 'package:fundr_using_provider/transaction/viewmodel/transaction_db.dart';
+import 'package:fundr_using_provider/transaction/viewmodel/transaction_widget.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 
-import 'package:fundr_using_provider/settings/models/settings_models.dart';
 import 'package:fundr_using_provider/transaction/view/edit_transaction/screen_edit_screen_transaction.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class SeeMoreTransaction extends StatelessWidget {
   const SeeMoreTransaction({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var selectedlist;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -28,13 +29,8 @@ class SeeMoreTransaction extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            ValueListenableBuilder(
-              valueListenable: selectedlist,
-              builder: (BuildContext context, Object? value, Widget? child) {
-                var dropdownvalue;
-                var items;
-                var dropdowncustomDate;
-                var customDAte;
+            Consumer<TransactonDbWidgets>(
+              builder: (BuildContext context, value, child) {
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 25, vertical: 21),
@@ -51,8 +47,8 @@ class SeeMoreTransaction extends StatelessWidget {
                           child: DropdownButton(
                             iconSize: 0,
                             dropdownColor: const Color(0xff4b50c7),
-                            value: dropdownvalue.toString(),
-                            items: items.map((String items) {
+                            value: value.dropdownvalue.toString(),
+                            items: value.items.map((String items) {
                               return DropdownMenuItem(
                                 value: items.toString(),
                                 child: Padding(
@@ -99,8 +95,8 @@ class SeeMoreTransaction extends StatelessWidget {
                           child: DropdownButton(
                               iconSize: 0,
                               dropdownColor: const Color(0xff4b50c7),
-                              value: dropdowncustomDate.toString(),
-                              items: customDAte.map((String customDAte) {
+                              value: value.dropdowncustomDate.toString(),
+                              items: value.customDAte.map((String customDAte) {
                                 return DropdownMenuItem(
                                   value: customDAte.toString(),
                                   child: Padding(
@@ -114,36 +110,14 @@ class SeeMoreTransaction extends StatelessWidget {
                                 );
                               }).toList(),
                               onChanged: (String? customDAtenewValue) {
-                                if (customDAtenewValue == 'Today') {
-                                  // setState(() {
-                                  //   dropdowncustomDate = customDAtenewValue;
-                                  //   selectedlist = TransactionDb
-                                  //       .instance.todayListNotifier;
-                                  // });
-                                } else if (customDAtenewValue == 'Yesterday') {
-                                  // setState(() {
-                                  //   dropdowncustomDate = customDAtenewValue;
-                                  //   selectedlist = TransactionDb
-                                  //       .instance.yesterdayListNotifier;
-                                  // });
-                                } else if (customDAtenewValue == 'Week') {
-                                  // setState(() {
-                                  //   dropdowncustomDate = customDAtenewValue;
-                                  //   selectedlist = TransactionDb
-                                  //       .instance.weeklyListNotifier;
-                                  // });
-                                } else if (customDAtenewValue == 'Month') {
-                                  // setState(() {
-                                  //   dropdowncustomDate = customDAtenewValue;
-                                  //   selectedlist = TransactionDb
-                                  //       .instance.monthlyListNotifier;
-                                  // });
-                                }
+                                value.onTabChangeFunction(
+                                    context, customDAtenewValue);
                               }),
                         ),
                       ),
                       Visibility(
-                        visible: dropdowncustomDate == "Month" ? true : false,
+                        visible:
+                            value.dropdowncustomDate == "Month" ? true : false,
                         child: IconButton(
                             onPressed: () {
                               pikdate(context: context);
@@ -156,99 +130,90 @@ class SeeMoreTransaction extends StatelessWidget {
               },
             ),
             Expanded(
-              child: ValueListenableBuilder(
-                valueListenable: selectedlist,
-                builder:
-                    (BuildContext context, Object? dynamic, Widget? child) {
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      child: ValueListenableBuilder(
-                        valueListenable: selectedlist,
-                        builder: (BuildContext ctx,
-                            List<TransactionModel> newList, Widget? _) {
-                          return ListView.separated(
-                            itemBuilder: ((context, index) {
-                              //values
-                              final value = newList[index];
-                              return Slidable(
-                                // key: Key(value.id!),
-                                startActionPane: ActionPane(
-                                  motion: const ScrollMotion(),
-                                  children: [
-                                    SlidableAction(
-                                      onPressed: (ctx) {
-                                        // TransactionDb.instance
-                                        //     .deleteTransaction(
-                                        //         value.id.toString());
-                                        // TransactionDb.instance.refresh();
-                                      },
-                                      icon: Icons.delete,
-                                      label: 'Delete',
-                                    ),
-                                    SlidableAction(
-                                      onPressed: (ctx) {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditScreenTransaction(
-                                                valued: value,
-                                              ),
-                                            ));
-                                      },
-                                      icon: const IconData(0xf00d,
-                                          fontFamily: 'MaterialIcons'),
-                                      label: 'Edit',
-                                    ),
-                                  ],
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  child: Consumer<TransactionDb>(
+                    builder: (BuildContext ctx, newList, _) {
+                      return ListView.separated(
+                        itemBuilder: ((context, index) {
+                          //values
+                          final value = newList.transactionListNotifier[index];
+                          return Slidable(
+                            // key: Key(value.id!),
+                            startActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (ctx) {
+                                    newList
+                                        .deleteTransaction(value.id.toString());
+                                    newList.refresh();
+                                  },
+                                  icon: Icons.delete,
+                                  label: 'Delete',
                                 ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(25),
-                                  child: Card(
-                                    elevation: 0,
-                                    child: ListTile(
-                                      tileColor: const Color.fromARGB(
-                                          255, 237, 238, 255),
-                                      leading: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: value.type == CategoryType.income
-                                            ? const Icon(
-                                                Icons.arrow_circle_down_sharp,
-                                                color: Colors.green,
-                                                size: 40,
-                                              )
-                                            : const Icon(
-                                                Icons.arrow_circle_up_sharp,
-                                                color: Colors.red,
-                                                size: 40,
-                                              ),
-                                      ),
-                                      title: Text(value.category.name),
-                                      subtitle: Text(
-                                        parseDate(value.date),
-                                      ),
-                                      trailing: Text(
-                                        '\u{20B9} ${value.amount}',
-                                        style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
+                                SlidableAction(
+                                  onPressed: (ctx) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditScreenTransaction(
+                                            valued: value,
+                                          ),
+                                        ));
+                                  },
+                                  icon: const IconData(0xf00d,
+                                      fontFamily: 'MaterialIcons'),
+                                  label: 'Edit',
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Card(
+                                elevation: 0,
+                                child: ListTile(
+                                  tileColor:
+                                      const Color.fromARGB(255, 237, 238, 255),
+                                  leading: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: value.type == CategoryType.income
+                                        ? const Icon(
+                                            Icons.arrow_circle_down_sharp,
+                                            color: Colors.green,
+                                            size: 40,
+                                          )
+                                        : const Icon(
+                                            Icons.arrow_circle_up_sharp,
+                                            color: Colors.red,
+                                            size: 40,
+                                          ),
+                                  ),
+                                  title: Text(value.category.name),
+                                  subtitle: Text(
+                                    parseDate(value.date),
+                                  ),
+                                  trailing: Text(
+                                    '\u{20B9} ${value.amount}',
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
-                              );
-                            }),
-                            separatorBuilder: (ctx, index) {
-                              return Container();
-                            },
-                            itemCount: newList.length,
+                              ),
+                            ),
                           );
+                        }),
+                        separatorBuilder: (ctx, index) {
+                          return Container();
                         },
-                      ),
-                    ),
-                  );
-                },
+                        itemCount: newList.transactionListNotifier.length,
+                      );
+                    },
+                  ),
+                ),
               ),
             ),
           ],

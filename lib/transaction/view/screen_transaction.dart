@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:fundr_using_provider/catagory/model/catagory_model.dart';
+import 'package:fundr_using_provider/home/view_models/home_provider.dart';
 import 'package:fundr_using_provider/home/widgets/home_screen_card_widget.dart';
-import 'package:fundr_using_provider/settings/models/settings_models.dart';
 import 'package:fundr_using_provider/transaction/view/edit_transaction/screen_edit_screen_transaction.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fundr_using_provider/transaction/view/screen_add_transaction.dart';
 import 'package:fundr_using_provider/transaction/viewmodel/transaction_db.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ScreenTransaction extends StatelessWidget {
-  const ScreenTransaction({Key? key}) : super(key: key);
-
+  const ScreenTransaction({
+    Key? key,
+  }) : super(key: key);
+// final TransactionModel object;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +28,13 @@ class ScreenTransaction extends StatelessWidget {
         backgroundColor: const Color(0xff4b50c7),
         elevation: 0,
         onPressed: () {
-          // if (ScreenHome.selectedIndexNotifier.value == 0) {
-          //   var routeName;
-          //   Navigator.of(context).pushNamed(ScreenAddTransaction.routeName!);
-          // }
+          if (context.read<HomeProvider>().selectedIndexNotifier == 0) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ScreenAddTransaction(),
+              ),
+            );
+          }
         },
         child: const Icon(Icons.add),
       ),
@@ -48,7 +54,7 @@ class ScreenTransaction extends StatelessWidget {
           builder: (context, valued, _) {
             return ListView.separated(
               itemBuilder: ((BuildContext context, int index) {
-                final value = valued.incomeList[index];
+                final value = valued.transactionListNotifier[index];
 
                 return Slidable(
                   //key: Key(value.id!),
@@ -100,12 +106,12 @@ class ScreenTransaction extends StatelessWidget {
                                     size: 40,
                                   ),
                           ),
-                          title: Text(value.category.name.toString()),
+                          title: Text(value.category.name),
                           subtitle: Text(
                             parseDate(value.date),
                           ),
                           trailing: Text(
-                            '\u{20B9} ${value.amount.toString()}',
+                            '\u{20B9} ${value.amount}',
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w500),
                           ),
@@ -120,8 +126,9 @@ class ScreenTransaction extends StatelessWidget {
                   height: 2,
                 );
               },
-              itemCount:
-                  valued.incomeList.length < 5 ? valued.incomeList.length : 5,
+              itemCount: valued.transactionListNotifier.length < 5
+                  ? valued.transactionListNotifier.length
+                  : 5,
             );
           },
         ),

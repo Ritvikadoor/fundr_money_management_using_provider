@@ -5,7 +5,10 @@ import 'package:fundr_using_provider/catagory/viewmodel/category_pop.dart';
 import 'package:fundr_using_provider/home/view/screen_home.dart';
 import 'package:fundr_using_provider/home/view_models/home_provider.dart';
 import 'package:fundr_using_provider/splash_screen/view/screen_splash.dart';
+import 'package:fundr_using_provider/transaction/viewmodel/screen_add_provider.dart';
+import 'package:fundr_using_provider/transaction/viewmodel/screen_edit_provider.dart';
 import 'package:fundr_using_provider/transaction/viewmodel/transaction_db.dart';
+import 'package:fundr_using_provider/transaction/viewmodel/transaction_widget.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
@@ -41,9 +44,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => HomeProvider()),
-        ChangeNotifierProvider(create: (context) => TransactionDb()),
         ChangeNotifierProvider(create: (context) => CategoryDB()),
-        ChangeNotifierProvider(create: (context) => CategoryPopUp())
+        ChangeNotifierProvider(create: (context) => CategoryPopUp()),
+        ChangeNotifierProvider(create: (context) => TransactionDb()),
+        ChangeNotifierProvider(create: (context) => TransactonDbWidgets()),
+        ChangeNotifierProvider(create: (context) => ScreenEditaProvider()),
+        ChangeNotifierProvider(
+            create: (context) => ScreenAddTrandactionProvider())
       ],
       child: MaterialApp(
         home: ScreenHome(),
