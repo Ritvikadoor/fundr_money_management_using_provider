@@ -162,6 +162,7 @@ class TransactionDb extends TransactionDbFunction with ChangeNotifier {
     final _db = await Hive.openBox<TransactionModel>(TRANSACTION_DB_NAME);
     _db.put(id, obj);
     refresh();
+    notifyListeners();
   }
 
   @override

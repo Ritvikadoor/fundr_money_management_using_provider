@@ -110,7 +110,7 @@ class ScreenAddTrandactionProvider with ChangeNotifier {
       id: id,
     );
 
-    // context.read<TransactionDb>().addTransaction(model);
+    context.read<TransactionDb>().addTransaction(model);
     context.read<TransactionDb>().refresh();
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) {
       return ScreenHome();

@@ -48,7 +48,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CategoryPopUp()),
         ChangeNotifierProvider(create: (context) => TransactionDb()),
         ChangeNotifierProvider(create: (context) => TransactonDbWidgets()),
-        ChangeNotifierProvider(create: (context) => ScreenEditaProvider()),
+        // ChangeNotifierProvider(create: (context) => ScreenEditaProvider()),
+        // ChangeNotifierProvider(create: (context) => EditProv()),
         ChangeNotifierProvider(
             create: (context) => ScreenAddTrandactionProvider())
       ],

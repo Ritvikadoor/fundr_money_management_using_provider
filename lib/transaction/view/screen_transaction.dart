@@ -55,7 +55,7 @@ class ScreenTransaction extends StatelessWidget {
             return ListView.separated(
               itemBuilder: ((BuildContext context, int index) {
                 final value = valued.transactionListNotifier[index];
-
+                print(valued.transactionListNotifier.length);
                 return Slidable(
                   //key: Key(value.id!),
                   startActionPane: ActionPane(
@@ -70,13 +70,13 @@ class ScreenTransaction extends StatelessWidget {
                       ),
                       SlidableAction(
                         onPressed: (ctx) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditScreenTransaction(
-                                  valued: value,
-                                ),
-                              ));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => EditScreenTransaction(
+                          //         valued: value,
+                          //       ),
+                          //     ));
                         },
                         icon:
                             const IconData(0xf00d, fontFamily: 'MaterialIcons'),
